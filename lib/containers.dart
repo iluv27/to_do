@@ -23,20 +23,31 @@ class TodoContainers extends StatelessWidget {
 // Containers for the add lsit page
 
 class AddListContainer extends StatelessWidget {
-  AddListContainer({super.key, required this.inputWords});
+  AddListContainer({super.key, this.inputWords});
 
-  String inputWords;
+  String? inputWords;
+
+  // Text addAContainer() {
+  //   return Text('');
+  // }
+
+  TextEditingController todoTexts = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return AddListWidget(
       textField: TextField(
+        controller: todoTexts,
         style: TextStyle(color: Colors.white, fontSize: 20),
         decoration: InputDecoration(
           border: UnderlineInputBorder(borderSide: BorderSide.none),
           hintText: inputWords,
           hintStyle: TextStyle(fontSize: 20),
         ),
+        onSubmitted: (value) {
+          todoTexts.text = value;
+          print(todoTexts.text);
+        },
       ),
     );
   }

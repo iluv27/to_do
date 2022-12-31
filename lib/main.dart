@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: AddItems(),
       theme: ThemeData.dark().copyWith(
         bottomSheetTheme: BottomSheetThemeData(

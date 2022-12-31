@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:to_do/constants.dart';
 import 'package:to_do/containers.dart';
-import 'package:flutter/cupertino.dart';
 
 class AddList extends StatefulWidget {
   const AddList({super.key});
@@ -14,12 +13,10 @@ class AddList extends StatefulWidget {
 }
 
 class _AddListState extends State<AddList> {
-  Widget addListContainer = AddListContainer(inputWords: 'Type Here');
   Widget todoContainers =
       TodoContainers(todoTexts: Icon(FontAwesomeIcons.plus));
   Widget todoContainers2 =
       TodoContainers(todoTexts: Icon(FontAwesomeIcons.plus));
-  var date;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,40 +42,40 @@ class _AddListState extends State<AddList> {
           children: [
             Column(
               children: [
-                addListContainer,
+                AddListContainer(inputWords: 'Type Here'),
                 kSpaces,
-                GestureDetector(
+                InkWell(
                     onTap: () {
-                      setState(() {
-                        todoContainers = addListContainer;
-                      });
+                      todoContainers =
+                          AddListContainer(inputWords: 'Type Here');
                     },
                     child: todoContainers),
                 kSpaces,
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        todoContainers2 = addListContainer;
+                        todoContainers2 =
+                            AddListContainer(inputWords: 'Type Here');
                       });
                     },
                     child: todoContainers2),
               ],
             ),
-            CupertinoButton(
-              // Display a CupertinoDatePicker in date picker mode.
-              onPressed: () => (CupertinoDatePicker(
-                initialDateTime: date,
-                mode: CupertinoDatePickerMode.date,
-                use24hFormat: true,
-                // This is called when the user changes the date.
-                onDateTimeChanged: (DateTime newDate) {
-                  setState(() => date = newDate);
-                },
-              )),
-              // In this example, the date value is formatted manually. You can use intl package
-              // to format the value based on user's locale settings.
-              child: Text(''),
-            ),
+            //   CupertinoButton(
+            //     // Display a CupertinoDatePicker in date picker mode.
+            //     onPressed: () => (CupertinoDatePicker(
+            //       initialDateTime: date,
+            //       mode: CupertinoDatePickerMode.date,
+            //       use24hFormat: true,
+            //       // This is called when the user changes the date.
+            //       onDateTimeChanged: (DateTime newDate) {
+            //         setState(() => date = newDate);
+            //       },
+            //     )),
+            //     // In this example, the date value is formatted manually. You can use intl package
+            //     // to format the value based on user's locale settings.
+            //     child: Text('$date'),
+            //   ),
           ],
         ),
       ),
