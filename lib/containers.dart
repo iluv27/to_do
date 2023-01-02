@@ -5,9 +5,33 @@ import 'constants.dart';
 
 // This is the container for the todo list page
 class TodoContainers extends StatelessWidget {
-  Widget? todoTexts;
+  String todoText;
 
-  TodoContainers({super.key, this.todoTexts});
+  TodoContainers({super.key, required this.todoText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15.0),
+      child: GestureDetector(
+        child: Container(
+            decoration: kContainerDecoration,
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
+            height: 60,
+            width: double.infinity,
+            child: Text(
+              todoText,
+              style: TextStyle(fontSize: 18),
+            )),
+      ),
+    );
+  }
+}
+
+class AddTodoContainers extends StatelessWidget {
+  Widget? todoWidget;
+
+  AddTodoContainers({super.key, this.todoWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +40,7 @@ class TodoContainers extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
         height: 60,
         width: double.infinity,
-        child: todoTexts);
+        child: todoWidget);
   }
 }
 

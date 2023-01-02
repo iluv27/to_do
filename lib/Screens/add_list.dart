@@ -13,10 +13,10 @@ class AddList extends StatefulWidget {
 }
 
 class _AddListState extends State<AddList> {
-  Widget todoContainers =
-      TodoContainers(todoTexts: Icon(FontAwesomeIcons.plus));
-  Widget todoContainers2 =
-      TodoContainers(todoTexts: Icon(FontAwesomeIcons.plus));
+  Widget addTodoContainers =
+      AddTodoContainers(todoWidget: Icon(FontAwesomeIcons.plus));
+  Widget addTodoContainers2 =
+      AddTodoContainers(todoWidget: Icon(FontAwesomeIcons.plus));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,19 +46,21 @@ class _AddListState extends State<AddList> {
                 kSpaces,
                 InkWell(
                     onTap: () {
-                      todoContainers =
-                          AddListContainer(inputWords: 'Type Here');
+                      setState(() {
+                        addTodoContainers =
+                            AddListContainer(inputWords: 'Type Here');
+                      });
                     },
-                    child: todoContainers),
+                    child: addTodoContainers),
                 kSpaces,
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        todoContainers2 =
+                        addTodoContainers2 =
                             AddListContainer(inputWords: 'Type Here');
                       });
                     },
-                    child: todoContainers2),
+                    child: addTodoContainers2),
               ],
             ),
             //   CupertinoButton(

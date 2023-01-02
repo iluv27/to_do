@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:to_do/Screens/add_list.dart';
 import 'package:to_do/constants.dart';
+import 'package:to_do/Lists.dart/add_list_widget.dart';
 import 'package:to_do/containers.dart';
 
 class AddItems extends StatefulWidget {
@@ -14,6 +15,7 @@ class AddItems extends StatefulWidget {
 }
 
 class _AddItemsState extends State<AddItems> {
+  CreateList createList = CreateList();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,34 +44,22 @@ class _AddItemsState extends State<AddItems> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: ListView.builder(
+          itemBuilder: (context, index) {
+            return Column(
               children: [
-                Text('today'),
-                TodoContainers(
-                    todoTexts: Text(
-                  'Do my biology homework',
-                  style: TextStyle(fontSize: 18),
-                )),
-                kSpaces,
-                TodoContainers(
-                    todoTexts: Text(
-                  'Send an email to my teacher',
-                  style: TextStyle(fontSize: 18),
-                )),
-                kSpaces,
-                TodoContainers(
-                    todoTexts: Text(
-                  'Have a date with Sarah',
-                  style: TextStyle(fontSize: 18),
-                ))
+                Column(
+                  children: [
+                    createList.addNewList[index],
+                  ],
+                ),
               ],
-            ),
-          )
-        ],
+            );
+          },
+          itemCount: createList.listCount,
+        ),
       ),
     );
   }
