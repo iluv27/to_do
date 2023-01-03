@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:to_do/Screens/add_list.dart';
 import 'package:to_do/constants.dart';
-import 'package:to_do/Lists.dart/add_list_widget.dart';
-import 'package:to_do/containers.dart';
+import 'package:to_do/lists.dart/add_list_widget.dart';
 
 class AddItems extends StatefulWidget {
   const AddItems({super.key});
@@ -46,19 +45,27 @@ class _AddItemsState extends State<AddItems> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                Column(
-                  children: [
-                    createList.addNewList[index],
-                  ],
-                ),
-              ],
-            );
-          },
-          itemCount: createList.listCount,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Today'),
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Column(
+                        children: [
+                          createList.addNewList[index],
+                        ],
+                      ),
+                    ],
+                  );
+                },
+                itemCount: createList.listCount,
+              ),
+            ),
+          ],
         ),
       ),
     );

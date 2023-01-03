@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'constants.dart';
+import 'package:to_do/lists.dart/add_list_widget.dart';
 
 // This is the container for the todo list page
 class TodoContainers extends StatelessWidget {
@@ -47,32 +48,24 @@ class AddTodoContainers extends StatelessWidget {
 // Containers for the add lsit page
 
 class AddListContainer extends StatelessWidget {
-  AddListContainer({super.key, this.inputWords});
+  AddListContainer({super.key, this.changeText, this.newTodoText});
 
-  String? inputWords;
+  TextEditingController? newTodoText = TextEditingController();
 
-  // Text addAContainer() {
-  //   return Text('');
-  // }
-
-  TextEditingController todoTexts = TextEditingController();
+  Function(String)? changeText;
 
   @override
   Widget build(BuildContext context) {
     return AddListWidget(
       textField: TextField(
-        controller: todoTexts,
-        style: TextStyle(color: Colors.white, fontSize: 20),
-        decoration: InputDecoration(
-          border: UnderlineInputBorder(borderSide: BorderSide.none),
-          hintText: inputWords,
-          hintStyle: TextStyle(fontSize: 20),
-        ),
-        onSubmitted: (value) {
-          todoTexts.text = value;
-          print(todoTexts.text);
-        },
-      ),
+          controller: newTodoText,
+          style: TextStyle(color: Colors.white, fontSize: 20),
+          decoration: InputDecoration(
+            border: UnderlineInputBorder(borderSide: BorderSide.none),
+            hintText: 'Type Here',
+            hintStyle: TextStyle(fontSize: 20),
+          ),
+          onSubmitted: changeText),
     );
   }
 }

@@ -12,7 +12,7 @@ class CreateList {
   }
 
   void addToCreateList(String newTodoText) {
-    final newList = TodoContainers(todoText: newTodoText);
-    addNewList.add(newList);
+    TodoContainers newList = TodoContainers(todoText: newTodoText);
+    return addNewList.add(newList);
   }
 }
