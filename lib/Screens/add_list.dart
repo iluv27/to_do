@@ -7,9 +7,10 @@ import 'package:to_do/containers.dart';
 import 'package:to_do/lists.dart/add_list_widget.dart';
 
 class AddList extends StatefulWidget {
-  const AddList({
-    super.key,
-  });
+  AddList({super.key, this.addCallBack, required this.addListContainer});
+
+  Function()? addCallBack;
+  AddListContainer addListContainer;
 
   @override
   State<AddList> createState() => _AddListState();
@@ -20,27 +21,6 @@ class _AddListState extends State<AddList> {
       AddTodoContainers(todoWidget: Icon(FontAwesomeIcons.plus));
   Widget addTodoContainers2 =
       AddTodoContainers(todoWidget: Icon(FontAwesomeIcons.plus));
-
-  TextEditingController newTodoText = TextEditingController();
-
-  void submitPup(BuildContext context) {
-    // First make sure there is some information in the form.
-    // A dog needs a name, but may be location independent,
-    // so we'll only abandon the save if there's no name.
-    if (newTodoText.text.isEmpty) {
-      print('Dogs need names!');
-    } else {
-      var newToDoText1 = newTodoText.text;
-      // Create a new dog with the informat((ion from the form.
-      // TodoContainers(
-      //   todoText: newTodoText.text,
-      // );
-      CreateList().addToCreateList(newToDoText1);
-      // Pop the page off the route stack and pass the new
-      // dog back to wherever this page was created.
-      Navigator.pop(context);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +47,18 @@ class _AddListState extends State<AddList> {
           children: [
             Column(
               children: [
-                AddListContainer(
-                  changeText: (value) {
-                    newTodoText.text = value;
-                    print(newTodoText.text);
-                  },
-                ),
+                widget.addListContainer,
                 kSpaces,
                 InkWell(
                     onTap: () {
                       setState(() {
-                        addTodoContainers = AddListContainer(
-                          changeText: (value) {
-                            newTodoText.text = value;
-                          },
-                        );
+                        addTodoContainers = widget.addListContainer;
+                        // AddListContainer(
+                        //   newTodoText: newTodoText,
+                        //   changeText: (value) {
+                        //     newTodoText.text = value.toString();
+                        //   },
+                        // );
                       });
                     },
                     child: addTodoContainers),
@@ -89,11 +66,7 @@ class _AddListState extends State<AddList> {
                 GestureDetector(
                     onTap: () {
                       setState(() {
-                        addTodoContainers2 = AddListContainer(
-                          changeText: (value) {
-                            newTodoText.text = value;
-                          },
-                        );
+                        addTodoContainers2 = widget.addListContainer;
                       });
                     },
                     child: addTodoContainers2),
@@ -138,14 +111,9 @@ class _AddListState extends State<AddList> {
                   backgroundColor: MaterialStateProperty.all(Colors.green),
                   textStyle: MaterialStateProperty.all(
                       TextStyle(fontSize: 28, color: Colors.black45))),
-              onPressed: (() {
-                setState(() {
-                  submitPup(context);
-                });
-              }),
+              onPressed: widget.addCallBack,
               child: Text(
                 'Add',
-                style: TextStyle(color: Colors.black),
               ),
             ),
           ],

@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:to_do/Screens/add_list.dart';
 import 'package:to_do/constants.dart';
 import 'package:to_do/lists.dart/add_list_widget.dart';
+import 'package:to_do/containers.dart';
 
 class AddItems extends StatefulWidget {
   const AddItems({super.key});
@@ -14,7 +15,16 @@ class AddItems extends StatefulWidget {
 }
 
 class _AddItemsState extends State<AddItems> {
-  CreateList createList = CreateList();
+  // CreateList createList = CreateList();
+
+  List<Task> task = [
+    Task(name: 'Go to the market'),
+    Task(name: 'Visit shop'),
+    Task(name: 'Be a good person'),
+  ];
+
+  TextEditingController newTodoText = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +44,22 @@ class _AddItemsState extends State<AddItems> {
           TextButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                return AddList();
+                return AddList(
+                  addCallBack: (() {
+                    setState(() {
+                      // CreateList().addToCreateList(newTodoText.text);'
+                      task.add(Task(name: newTodoText.text));
+                    });
+                    Navigator.pop(context);
+                  }),
+                  addListContainer: AddListContainer(
+                    newTodoText: newTodoText,
+                    changeText: (value) {
+                      newTodoText.text = value.toString();
+                      print(newTodoText.text);
+                    },
+                  ),
+                );
               })));
             },
             style: ButtonStyle(
@@ -56,13 +81,14 @@ class _AddItemsState extends State<AddItems> {
                     children: [
                       Column(
                         children: [
-                          createList.addNewList[index],
+                          // createList.addNewList[index],
+                          TodoContainers(todoText: task[index].name),
                         ],
                       ),
                     ],
                   );
                 },
-                itemCount: createList.listCount,
+                itemCount: task.length,
               ),
             ),
           ],

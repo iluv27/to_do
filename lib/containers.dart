@@ -48,11 +48,12 @@ class AddTodoContainers extends StatelessWidget {
 // Containers for the add lsit page
 
 class AddListContainer extends StatelessWidget {
-  AddListContainer({super.key, this.changeText, this.newTodoText});
+  AddListContainer(
+      {super.key, required this.changeText, required this.newTodoText});
 
-  TextEditingController? newTodoText = TextEditingController();
+  TextEditingController newTodoText = TextEditingController();
 
-  Function(String)? changeText;
+  Function(TextEditingController) changeText;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,9 @@ class AddListContainer extends StatelessWidget {
             hintText: 'Type Here',
             hintStyle: TextStyle(fontSize: 20),
           ),
-          onSubmitted: changeText),
+          onSubmitted: ((value) {
+            changeText(newTodoText);
+          })),
     );
   }
 }
