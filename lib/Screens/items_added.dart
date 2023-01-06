@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, list_remove_unrelated_type
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,9 +18,9 @@ class _AddItemsState extends State<AddItems> {
   // CreateList createList = CreateList();
 
   List<Task> task = [
-    Task(name: 'Go to the market'),
-    Task(name: 'Visit shop'),
-    Task(name: 'Be a good person'),
+    Task(name: 'Add your own to do!'),
+    Task(name: 'slide right if done.'),
+    Task(name: 'slide left to delete.'),
   ];
 
   TextEditingController newTodoText = TextEditingController();
@@ -43,24 +43,28 @@ class _AddItemsState extends State<AddItems> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) {
-                return AddList(
-                  addCallBack: (() {
-                    setState(() {
-                      // CreateList().addToCreateList(newTodoText.text);'
-                      task.add(Task(name: newTodoText.text));
-                    });
-                    Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: ((context) {
+                    return AddList(
+                      addCallBack: (() {
+                        setState(() {
+                          // CreateList().addToCreateList(newTodoText.text);'
+                          task.add(Task(name: newTodoText.text));
+                        });
+                        Navigator.pop(context);
+                      }),
+                      addListContainer: AddListContainer(
+                        newTodoText: newTodoText,
+                        changeText: (value) {
+                          newTodoText.text = value.toString();
+                        },
+                      ),
+                    );
                   }),
-                  addListContainer: AddListContainer(
-                    newTodoText: newTodoText,
-                    changeText: (value) {
-                      newTodoText.text = value.toString();
-                      print(newTodoText.text);
-                    },
-                  ),
-                );
-              })));
+                ),
+              );
             },
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all(Colors.white)),
@@ -77,15 +81,35 @@ class _AddItemsState extends State<AddItems> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Column(
-                        children: [
-                          // createList.addNewList[index],
+                  return Dismissible(
+                    key: UniqueKey(),
+                    background: Container(
+                      color: Colors.green,
+                      child: Icon(Icons.check),
+                    ),
+                    secondaryBackground: Container(
+                      color: Colors.red,
+                      child: Icon(Icons.delete),
+                    ),
+                    // key: UniqueKey (task[index]),
+
+                    onDismissed: (DismissDirection direction) {
+                      if (direction == DismissDirection.endToStart) {
+                        task.remove(
                           TodoContainers(todoText: task[index].name),
-                        ],
-                      ),
-                    ],
+                        );
+                      }
+                    },
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            // createList.addNewList[index],
+                            TodoContainers(todoText: task[index].name),
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 },
                 itemCount: task.length,
